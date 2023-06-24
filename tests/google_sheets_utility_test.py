@@ -3,7 +3,6 @@ import os
 
 import pytest
 
-import gspread
 from src.google_sheets_utility.delivery_sheet import DeliverySheet
 
 from .conftest import GspreadTest

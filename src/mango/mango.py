@@ -1,6 +1,3 @@
-from self import self
-
-
 class Mango:
     KHIRSHA = "khirsha"
     HARIBHANGA = "haribhanga"

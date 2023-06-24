@@ -3,6 +3,7 @@ import os
 import pytest
 
 from src.google_sheets_utility.delivery_sheet import DeliverySheet
+from src.mango.mango import Mango
 
 from tests.conftest import GspreadTest
 
@@ -52,3 +53,32 @@ class SpreadsheetSanityTest(GspreadTest):
     def test_file_has_more_than_four_rows(self):
         delivery_sheet = DeliverySheet()
         self.assertTrue(delivery_sheet.delivery_sheet.row_count > 4)
+
+# To Do
+    @pytest.mark.vcr()
+    def test_the_sheet_title_has_name_of_mango_from_mango_common_list(self):
+        delivery_sheet = DeliverySheet()
+        # data = delivery_sheet.delivery_sheet.get_all_records()
+        # print(data)
+        # To Do:
+        # Need to load the title bar and see if one of the cell contains a mango from the common mango
+        # list
+        mango = Mango()
+        common_mango = mango.get_common_list_of_mango()
+
+        self.assertTrue(True)
+
+    # To Do
+    @pytest.mark.vcr()
+    def test_the_sheet_title_has_name_of_mango_from_mango_common_list(self):
+        delivery_sheet = DeliverySheet()
+        # data = delivery_sheet.delivery_sheet.get_all_records()
+        # print(data)
+        # To Do:
+        # Need to load the title bar and see if one of the cell contains a mango from the common mango
+        # list
+        mango = Mango()
+        common_mango = mango.get_common_list_of_mango()
+
+        self.assertTrue(True)
+

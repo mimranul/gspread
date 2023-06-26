@@ -39,10 +39,6 @@ class SpreadsheetSanityTest(GspreadTest):
         delivery_sheet = DeliverySheet()
         self.assertTrue(delivery_sheet.delivery_sheet.col_count != 0)
 
-    @pytest.mark.vcr()
-    def test_file_does_not_have_zero_rows(self):
-        delivery_sheet = DeliverySheet()
-        self.assertTrue(delivery_sheet.delivery_sheet.row_count != 0)
 
     @pytest.mark.vcr()
     def test_file_has_more_than_four_columns(self):

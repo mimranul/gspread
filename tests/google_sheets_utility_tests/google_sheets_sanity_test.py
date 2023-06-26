@@ -2,7 +2,6 @@ import os
 
 import pytest
 
-from src.google_sheets_utility import delivery_sheet
 from src.google_sheets_utility.delivery_sheet import DeliverySheet
 from src.mango.mango import Mango
 
@@ -32,14 +31,15 @@ def teardown_module():
 
 class SpreadsheetSanityTest(GspreadTest):
 
-    # @pytest.mark.google_sheets()
-    # def test_secret_file_exists(self):
-    #     self.assertTrue(os.path.exists(delivery_sheet.secret_file))
-    #
-    # @pytest.mark.google_sheets()
-    # def test_spread_sheet_can_be_load(self):
-    #     delivery_sheet = setup_before_test()
-    #     self.assertTrue(delivery_sheet.title.__eq__(spread_sheet_delivery_sheet))
+    @pytest.mark.google_sheets()
+    def test_secret_file_exists(self):
+        self.assertTrue(os.path.exists(pytest.delivery_sheet.secret_file))
+
+    @pytest.mark.google_sheets()
+    def test_spread_sheet_can_be_load(self):
+        print("")
+        self.assertTrue(pytest.delivery_sheet.delivery_sheet.title.
+                        __eq__(pytest.delivery_sheet.spread_sheet_delivery_sheet))
 
     @pytest.mark.google_sheets()
     def test_spread_sheet_has_file_name(self):

@@ -1,15 +1,8 @@
 class District:
-    DHAKA = "dhaka"
-    RANGPUR = "rangpur"
-    BOGRA = "bogra"
-    GOPALGANJ = "gopalganj"
-    CHANDPUR = "chandpur"
-    NARAYANGANJ = "narayanganj"
-    CHITTAGANG = "chittagang"
-
-    def get_district_list(self):
-        return [self.DHAKA, self.RANGPUR, self.BOGRA, self.GOPALGANJ, self.CHANDPUR,
-                self.NARAYANGANJ]
-
-    def get_districts_where_not_supported(self):
-        return [self.CHITTAGANG]
+    def __init__(self, id, division_id, name, bn_name, lat, long):
+        self.id = id
+        self.division_id = division_id
+        self.name = name
+        self.bn_name = bn_name
+        self.lat = lat
+        self.long = long

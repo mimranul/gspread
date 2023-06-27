@@ -4,7 +4,6 @@ import pytest
 
 from src.google_sheets_utility.delivery_sheet import DeliverySheet
 from src.mango.mango import Mango
-
 from tests.conftest import GspreadTest
 
 """
@@ -68,7 +67,7 @@ class SpreadsheetSanityTest(GspreadTest):
 
     # To Do
     @pytest.mark.sanity()
-    def test_the_sheet_title_has_name_of_mango_from_mango_common_list(self):
+    def test_the_delivery_sheet_title_has_name_of_mango_from_mango_common_list(self):
         # data = delivery_sheet.delivery_sheet.get_all_records()
         # print(data)
         # To Do:

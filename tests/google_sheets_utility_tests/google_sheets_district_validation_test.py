@@ -1,5 +1,7 @@
 import json
+from statistics import median, mode, mean
 
+import geopy.distance
 import pandas as pd
 import pytest
 
@@ -80,4 +82,29 @@ class DeliverySheetDistrictValidationTest(GspreadTest):
         self.assertTrue(len(lats) == len(districts))
         self.assertTrue(len(longs) == len(lats))
 
-    # def test_distance_between_districts_are_above_tolerance(self):
+    def test_distance_between_districts_are_statistically_accurate(self):
+        """
+        The purpose of the test is to make sure the JSON object file contains statistically
+        accurate long and lat values
+        """
+        data = load_districts_json_file()
+        districts_info_list = data['districts']
+
+        district_long_lat_dict = dict()
+
+        for district in districts_info_list:
+            district_long_lat_dict.update({district.get('name'): [district.get('lat'), district.get('long')]})
+
+        distances = []
+        for i in range(len(district_long_lat_dict.keys())):
+            for j in range(len(district_long_lat_dict.keys())):
+                distance = geopy.distance. \
+                    geodesic(district_long_lat_dict.get(list(district_long_lat_dict.keys())[i]),
+                             district_long_lat_dict.get(list(district_long_lat_dict.keys())[j])).km
+                distances.append(distance)
+                if i != j:
+                    distances.append(distance)
+
+        self.assertTrue(int(mean(distances)) == 202)
+        self.assertTrue(int(mode(distances)) == 0)
+        self.assertTrue(int(median(distances)) == 190)

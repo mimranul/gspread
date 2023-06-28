@@ -105,6 +105,6 @@ class DeliverySheetDistrictValidationTest(GspreadTest):
                 if i != j:
                     distances.append(distance)
 
-        self.assertTrue(int(mean(distances)) == 202)
-        self.assertTrue(int(mode(distances)) == 0)
-        self.assertTrue(int(median(distances)) == 190)
+        self.assertTrue(int(mean(distances)) == 202, "The mean distance between district is no accurate")
+        self.assertTrue(int(mode(distances)) == 0, "The mode distance between district is no accurate")
+        self.assertTrue(int(median(distances)) == 190, "The median distance between district is no accurate")

@@ -29,7 +29,7 @@ def load_districts_json_file():
     return data
 
 
-class DeliverySheetDistrictValidationTest(GspreadTest):
+class DistrictJsonFileTest(GspreadTest):
     def test_delivery_list_contains_valid_district(self):
         delivery_sheet = DeliverySheet()
         delivery_sheet = delivery_sheet.delivery_sheet
@@ -97,6 +97,7 @@ class DeliverySheetDistrictValidationTest(GspreadTest):
 
         distances = []
         for i in range(len(district_long_lat_dict.keys())):
+            j=i
             for j in range(len(district_long_lat_dict.keys())):
                 distance = geopy.distance. \
                     geodesic(district_long_lat_dict.get(list(district_long_lat_dict.keys())[i]),
@@ -105,6 +106,7 @@ class DeliverySheetDistrictValidationTest(GspreadTest):
                 if i != j:
                     distances.append(distance)
 
-        self.assertTrue(int(mean(distances)) == 202, "The mean distance between district is no accurate")
-        self.assertTrue(int(mode(distances)) == 0, "The mode distance between district is no accurate")
-        self.assertTrue(int(median(distances)) == 190, "The median distance between district is no accurate")
+        # Logical Error here. See distric_test.py test_distance_between_districts_statistics
+        self.assertTrue(int(mean(distances)) == 202, "The mean distance between district is not accurate")
+        self.assertTrue(int(mode(distances)) == 0, "The mode distance between district is not accurate")
+        self.assertTrue(int(median(distances)) == 190, "The median distance between district is not accurate")

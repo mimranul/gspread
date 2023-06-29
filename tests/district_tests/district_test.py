@@ -85,14 +85,20 @@ class DistrictJsonFileTest(GspreadTest):
     @pytest.mark.district()
     def test_each_district_can_be_load_by_id(self):
         district = District()
-        districts = set()
+        districts_en_names = set()
+        districts_bn_names = set()
         for i in range(65):
-            district_name_found_by_id = district.get_name_of_district_by_id(str(i))
-            if district_name_found_by_id is not None \
-                    and not district.check_if_a_district_exists(district_name_found_by_id):
-                districts.add(district_name_found_by_id)
+            district_en_name_found_by_id = district.get_name_of_district_by_id(str(i))
+            district_bn_name_found_by_id = district.get_bn_name_of_district_by_id(str(i))
+            if district_en_name_found_by_id is not None \
+                    and not district.check_if_a_district_exists_by_name(district_en_name_found_by_id):
+                districts_en_names.add(district_en_name_found_by_id)
 
-        self.assertEqual(len(districts), 64, "District could not be loaded with id")
+            if district_bn_name_found_by_id is not None:
+                districts_bn_names.add(district_en_name_found_by_id)
+
+        self.assertEqual(len(districts_en_names), 64, "District could not be loaded with id")
+        self.assertEqual(len(districts_bn_names), 64, "District could not be loaded with id")
 
     @pytest.mark.district()
     def test_district_can_not_be_load_by_invalid_id(self):

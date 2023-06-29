@@ -58,10 +58,30 @@ class District(object):
             return None
 
     @classmethod
-    def check_if_a_district_exists(cls, given_district="Dhaka"):
+    def get_bn_name_of_district_by_id(cls, given_id='1'):
+        data = cls.get_list_of_district_info_list()
+        if 64 >= int(given_id) >= 0:
+            for district in data:
+                if district.get('id') == given_id:
+                    return district.get('bn_name')
+        else:
+            return None
+
+    @classmethod
+    def check_if_a_district_exists_by_name(cls, given_district="Dhaka"):
         data = cls.load_districts_json_file()
         districts = []
         for district in data['districts']:
             districts.append(district)
 
         return given_district in districts
+
+    @classmethod
+    def check_if_a_district_exists_by_bn_name(cls, given_district="মৌলভীবাজার"):
+        data = cls.load_districts_json_file()
+        districts = []
+        for district in data['districts']:
+            districts.append(district)
+
+        return given_district in districts
+

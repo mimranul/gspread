@@ -40,11 +40,29 @@ class District(object):
         return district_list
 
     @classmethod
+    def get_list_of_districts_bn_name(cls):
+        district_info = cls.get_list_of_district_info_list()
+        district_list = []
+        for district in district_info:
+            district_list.append(district.get('bn_name'))
+
+        return district_list
+
+    @classmethod
     def get_coordinates_of_district_by_name(cls, given_district="Dhaka"):
         data = cls.get_list_of_district_info_list()
         if given_district in cls.get_list_of_districts():
             for district in data:
                 if district.get('name') == given_district:
+                    return [district.get("lat"), district.get("long")]
+
+    @classmethod
+    def get_coordinates_of_district_by_bn_name(cls, given_district="মৌলভীবাজার"):
+        data = cls.get_list_of_district_info_list()
+        bn_list_of_districts = cls.get_list_of_districts_bn_name()
+        if given_district in bn_list_of_districts:
+            for district in data:
+                if district.get('bn_name') == given_district:
                     return [district.get("lat"), district.get("long")]
 
     @classmethod

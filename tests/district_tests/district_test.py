@@ -1,12 +1,12 @@
-import json
+
 from statistics import median, mode, mean
 
 import geopy.distance
-import pandas as pd
+
 import pytest
 
 from src.district.District import District
-from src.google_sheets_utility.delivery_sheet import DeliverySheet
+
 from tests.conftest import GspreadTest
 
 """
@@ -23,7 +23,7 @@ def setup_module():
     pytest.district_json_file = ""
 
 
-class DistrictJsonFileTest(GspreadTest):
+class DivisionJsonFileTest(GspreadTest):
     @pytest.mark.district()
     def test_make_district_object(self):
         # Create a district object from the test data
@@ -67,13 +67,25 @@ class DistrictJsonFileTest(GspreadTest):
     @pytest.mark.district()
     def test_distance_between_districts_statistics(self):
         district = District()
+
         distances = []
+        bn_distances = []
+
         districts = district.get_list_of_districts()
+        bn_districts = district.get_list_of_districts_bn_name()
+
         for i in range(len(districts)):
             j = i
             for j in range(len(districts)):
                 coordinate_district_1 = district.get_coordinates_of_district_by_name(districts[i])
                 coordinate_district_2 = district.get_coordinates_of_district_by_name(districts[j])
+
+                bn_coordinate_district_1 = district.get_coordinates_of_district_by_bn_name(bn_districts[i])
+                bn_coordinate_district_2 = district.get_coordinates_of_district_by_bn_name(bn_districts[j])
+
+                self.assertEqual(coordinate_district_1, bn_coordinate_district_1, "Coordinates for queries aren't same")
+                self.assertEqual(coordinate_district_2, bn_coordinate_district_2, "Coordinates for queries aren't same")
+
                 distance = geopy.distance.geodesic(coordinate_district_1, coordinate_district_2).km
                 if i != j:
                     distances.append(distance)
@@ -110,5 +122,3 @@ class DistrictJsonFileTest(GspreadTest):
             districts.append(district_name_found_by_id)
 
         self.assertEqual(len(districts), len(invalid_ids), "District could not be loaded with id")
-
-

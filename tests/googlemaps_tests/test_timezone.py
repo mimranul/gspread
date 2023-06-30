@@ -20,6 +20,7 @@
 
 import datetime
 
+import pytest
 import responses
 from unittest import mock
 import googlemaps
@@ -59,24 +60,25 @@ class TimezoneTest(TestCase):
 
         utcnow = now
 
-    # @responses.activate
-    # @mock.patch("googlemaps.timezone.datetime", MockDatetime())
-    # def test_los_angeles_with_no_timestamp(self):
-    #     responses.add(
-    #         responses.GET,
-    #         "https://maps.googleapis.com/maps/api/timezone/json",
-    #         body='{"status":"OK"}',
-    #         status=200,
-    #         content_type="application/json",
-    #     )
-    #
-    #     timezone = self.client.timezone((39.603481, -119.682251))
-    #     self.assertIsNotNone(timezone)
-    #
-    #     self.assertEqual(1, len(responses.calls))
-    #     self.assertURLEqual(
-    #         "https://maps.googleapis.com/maps/api/timezone/json"
-    #         "?location=39.603481,-119.682251&timestamp=%d"
-    #         "&key=%s" % (1608, self.key),
-    #         responses.calls[0].request.url,
-    #     )
+    @responses.activate
+    @mock.patch("googlemaps.timezone.datetime", MockDatetime())
+    @pytest.mark.skip(reason="Ignore this test until the issue is resolved")
+    def test_los_angeles_with_no_timestamp(self):
+        responses.add(
+            responses.GET,
+            "https://maps.googleapis.com/maps/api/timezone/json",
+            body='{"status":"OK"}',
+            status=200,
+            content_type="application/json",
+        )
+        ts = 1331766000
+        timezone = self.client.timezone((39.603481, -119.682251), ts)
+        self.assertIsNotNone(timezone)
+
+        self.assertEqual(1, len(responses.calls))
+        self.assertURLEqual(
+            "https://maps.googleapis.com/maps/api/timezone/json"
+            "?location=39.603481,-119.682251&timestamp=%d"
+            "&key=%s" % (1608, self.key),
+            responses.calls[0].request.url,
+        )
